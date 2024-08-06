@@ -1,0 +1,47 @@
+[tool.poetry]
+name = "immergity-test-072024"
+version = "0.1.0"
+description = ""
+authors = ["Kirill Kostin <fxmont@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.111.1"
+SQLAlchemy = "^2.0.31"
+ruff = "^0.5.4"
+black = "^24.4.2"
+pydantic-settings = "^2.3.4"
+alembic = "^1.13.2"
+psycopg2-binary = "^2.9.9"
+asyncpg = "^0.29.0"
+pre-commit = "^3.7.1"
+python-multipart = "^0.0.9"
+aiofiles = "^24.1.0"
+boto3 = "^1.34.154"
+pytest = "^8.3.2"
+httpx = "^0.27.0"
+pytest-asyncio = "^0.23.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff.lint]
+select=[
+  "E",  # pycodestyle errors
+  "W",  # pycodestyle warnings
+  "F",  # pyflakes
+  "I",  # isort
+  "C",  # flake8-comprehensions
+  "B",  # flake8-bugbear
+  "PLE", # pylint error
+  "PLR", # pylint refactor
+  "PLW", # pylint warning
+  "UP", # pyupgrade
+]
+
+extend-ignore = [
+  "E501" # line-too-long (E501)
+]

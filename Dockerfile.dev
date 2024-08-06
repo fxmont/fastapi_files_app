@@ -1,0 +1,26 @@
+FROM python:3.12-bookworm as base
+
+WORKDIR /app
+
+# Устанавливаем cron
+RUN apt-get update && apt-get install -y cron
+
+# Настраиваем cron
+# */5 * * * * -> every 5 minutes
+# */1 * * * * -> every minute
+RUN echo "*/1 * * * * /bin/sh /app/cleanup_uploads.sh >> /var/log/cleanup_uploads.log 2>&1" > /etc/cron.d/cleanup-cron
+
+# Активируем cron job для очистки папки uploads
+RUN crontab /etc/cron.d/cleanup-cron
+
+# Устанавливаем poetry в базовом слое
+RUN pip install poetry
+
+# Копируем файлы конфигурации poetry
+COPY ./pyproject.toml ./poetry.lock* /app/
+
+# Устанавливаем зависимости в виртуальное окружение, создаваемое poetry
+RUN poetry config virtualenvs.create false && poetry install --no-dev
+
+# Копируем исходный код
+COPY . .
